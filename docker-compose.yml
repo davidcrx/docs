@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mkdocs:
+    image: polinux/mkdocs:latest
+    container_name: mkdocs
+    depends_on:
+      - letsencrypt
+    environment:
+      - VIRTUAL_HOST=docs.davidcreus.com
+      #- LETSENCRYPT_HOST=docs.davidcreus.com
+      - GIT_REPO=git@github.com:davidcrx/docs.git
+      - LIVE_RELOAD_SUPPORT=true
+    volumes:
+      - mkdocs:/mkdocs
+      - /home/davidcreus/.ssh:/root/.ssh:ro
+    ports:
+      - "8000:8000"
+    working_dir: /mkdocs
+
+volumes:
+  mkdocs:
